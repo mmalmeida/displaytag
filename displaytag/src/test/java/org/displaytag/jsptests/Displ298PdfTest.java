@@ -41,6 +41,7 @@ public class Displ298PdfTest extends DisplaytagCase
         String mediaParameter = encoder.encodeParameterName(TableTagParameters.PARAMETER_EXPORTTYPE);
         WebRequest request = new GetMethodWebRequest(getJspUrl(getJspName()));
 
+
         // this will force media type initialization
         MediaTypeEnum.registerMediaType("wpdf");
         ExportViewFactory factory = ExportViewFactory.getInstance();
@@ -48,7 +49,6 @@ public class Displ298PdfTest extends DisplaytagCase
         MediaTypeEnum pdfMedia = MediaTypeEnum.fromName("wpdf");
         Assert.assertNotNull("Pdf export view not correctly registered.", pdfMedia);
         request.setParameter(mediaParameter, Integer.toString(pdfMedia.getCode()));
-
         WebResponse response = runner.getResponse(request);
 
         Assert.assertEquals("Expected a different content type.", "application/pdf", response.getContentType());

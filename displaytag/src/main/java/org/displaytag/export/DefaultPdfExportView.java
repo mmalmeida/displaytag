@@ -84,10 +84,10 @@ public class DefaultPdfExportView extends DefaultItextExportView
             {
             }
             PdfContentByte cb = writer.getDirectContent();
-            cb.saveState();
+            //cb.saveState();
             // write the headertable
             table.setTotalWidth(document.right() - document.left());
-            table.writeSelectedRows(0, -1, document.left(), document.getPageSize().height() - 50, cb);
+            table.writeSelectedRows(0, -1, document.left(), document.getPageSize().getHeight() - 50, cb);
             // compose the footer
             String text = "Page " + writer.getPageNumber();
             float textSize = helv.getWidthPoint(text, 12);
@@ -99,7 +99,7 @@ public class DefaultPdfExportView extends DefaultItextExportView
             cb.showText(text);
             cb.endText();
             cb.addTemplate(tpl, document.right() - adjust, textBase);
-            cb.saveState();
+            //cb.restoreState();
         }
     }
 }

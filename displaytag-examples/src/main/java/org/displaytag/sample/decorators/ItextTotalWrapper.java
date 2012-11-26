@@ -21,125 +21,128 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
 
-
 /**
  * Same idea implemented in ItextTableWriter applied to decorators.
+ * 
  * @see org.displaytag.render.ItextTableWriter
  * @author Jorge L. Barroso
  * @version $Revision$ ($Author$)
  */
-public class ItextTotalWrapper extends TotalWrapperTemplate
-    implements
-    org.displaytag.render.ItextTableWriter.ItextDecorator
-{
+public class ItextTotalWrapper extends TotalWrapperTemplate implements
+		org.displaytag.render.ItextTableWriter.ItextDecorator {
 
-    /**
-     * The iText table in which the totals are rendered.
-     */
-    private Table table;
+	/**
+	 * The iText table in which the totals are rendered.
+	 */
+	private Table table;
 
-    /**
-     * The iText font used to render the totals.
-     */
-    private Font font;
+	/**
+	 * The iText font used to render the totals.
+	 */
+	private Font font;
 
-    /**
-     * Set the table required to render the totals line.
-     * @param table The table required to render the totals line.
-     * @see org.displaytag.decorator.itext.DecoratesItext#setTable(com.lowagie.text.Table)
-     */
-    public void setTable(Table table)
-    {
-        this.table = table;
-    }
+	/**
+	 * Set the table required to render the totals line.
+	 * 
+	 * @param table
+	 *            The table required to render the totals line.
+	 * @see org.displaytag.decorator.itext.DecoratesItext#setTable(com.lowagie.text.Table)
+	 */
+	public void setTable(Table table) {
+		this.table = table;
+	}
 
-    /**
-     * Set the font required to render the totals line.
-     * @param font The font required to render the totals line.
-     * @see org.displaytag.decorator.itext.DecoratesItext#setFont(com.lowagie.text.Font)
-     */
-    public void setFont(Font font)
-    {
-        this.font = font;
-    }
+	/**
+	 * Set the font required to render the totals line.
+	 * 
+	 * @param font
+	 *            The font required to render the totals line.
+	 * @see org.displaytag.decorator.itext.DecoratesItext#setFont(com.lowagie.text.Font)
+	 */
+	public void setFont(Font font) {
+		this.font = font;
+	}
 
-    /**
-     * Writes cell border at bottom of cell.
-     */
-    public String startRow()
-    {
-        this.table.setDefaultCellBorder(Rectangle.BOTTOM);
-        return null;
-    }
+	/**
+	 * Writes cell border at bottom of cell.
+	 */
+	public String startRow() {
+		this.table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+		return null;
+	}
 
-    /**
-     * Writes the city total line.
-     * @param city City name.
-     * @param total City total.
-     */
-    protected void writeCityTotal(String city, double total)
-    {
-        this.writeTotal(city, total);
-    }
+	/**
+	 * Writes the city total line.
+	 * 
+	 * @param city
+	 *            City name.
+	 * @param total
+	 *            City total.
+	 */
+	protected void writeCityTotal(String city, double total) {
+		this.writeTotal(city, total);
+	}
 
-    /**
-     * Writes the table grand total
-     * @param total Table grand total
-     */
-    protected void writeGrandTotal(double total)
-    {
-        this.writeTotal("Grand", total);
-    }
+	/**
+	 * Writes the table grand total
+	 * 
+	 * @param total
+	 *            Table grand total
+	 */
+	protected void writeGrandTotal(double total) {
+		this.writeTotal("Grand", total);
+	}
 
-    /**
-     * Writes a total line.
-     * @param value Total message.
-     * @param total Total number.
-     */
-    private void writeTotal(String value, double total)
-    {
-        if (assertRequiredState())
-        {
-            try
-            {
-                this.font = FontFactory.getFont(this.font.getFamilyname(), this.font.size(), Font.BOLD, this.font
-                    .color());
-                table.addCell(this.getCell(""));
-                table.addCell(this.getCell(""));
-                table.addCell(this.getCell("-------------"));
-                table.addCell(this.getCell(""));
-                // new row
-                table.addCell(this.getCell(""));
-                table.addCell(this.getCell(value + " Total:"));
-                table.addCell(this.getCell(total + ""));
-                table.addCell(this.getCell(""));
-            }
-            catch (BadElementException e)
-            {
-            }
-        }
-    }
+	/**
+	 * Writes a total line.
+	 * 
+	 * @param value
+	 *            Total message.
+	 * @param total
+	 *            Total number.
+	 */
+	private void writeTotal(String value, double total) {
+		if (assertRequiredState()) {
+			try {
+				this.font = FontFactory.getFont(this.font.getFamilyname(), this.font.getSize(), Font.BOLD,
+						this.font.getColor());
+				table.addCell(this.getCell(""));
+				table.addCell(this.getCell(""));
+				table.addCell(this.getCell("-------------"));
+				table.addCell(this.getCell(""));
+				// new row
+				table.addCell(this.getCell(""));
+				table.addCell(this.getCell(value + " Total:"));
+				table.addCell(this.getCell(total + ""));
+				table.addCell(this.getCell(""));
+			} catch (BadElementException e) {
+			}
+		}
+	}
 
-    /**
-     * Obtain a cell with the given value.
-     * @param value Value to display in the cell.
-     * @return A cell with the given value.
-     * @throws BadElementException if an error occurs while generating the cell.
-     */
-    private Cell getCell(String value) throws BadElementException
-    {
-        Cell cell = new Cell(new Chunk(value, this.font));
-        cell.setLeading(8);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        return cell;
-    }
+	/**
+	 * Obtain a cell with the given value.
+	 * 
+	 * @param value
+	 *            Value to display in the cell.
+	 * @return A cell with the given value.
+	 * @throws BadElementException
+	 *             if an error occurs while generating the cell.
+	 */
+	private Cell getCell(String value) throws BadElementException {
+		Cell cell = new Cell(new Chunk(value, this.font));
+		cell.setLeading(8);
+		cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		return cell;
+	}
 
-    /**
-     * Asserts that the table and font properties needed have been set by the client.
-     * @return true if the required properties are not null; false otherwise.
-     */
-    private boolean assertRequiredState()
-    {
-        return this.table != null && this.font != null;
-    }
+	/**
+	 * Asserts that the table and font properties needed have been set by the
+	 * client.
+	 * 
+	 * @return true if the required properties are not null; false otherwise.
+	 */
+	private boolean assertRequiredState() {
+		return this.table != null && this.font != null;
+	}
 }

@@ -76,6 +76,7 @@ public abstract class DefaultItextExportView implements BinaryExportView
         }
         catch (Exception e)
         {
+        	System.out.println(e);
             throw new ItextGenerationException(e);
         }
     }
