@@ -504,10 +504,13 @@
 	</dependencyManagement>
 	<distributionManagement>
 		<repository>
-			<id>displaytag</id>
-			<url>scp://shell.sourceforge.net/home/groups/d/di/displaytag/htdocs/m2repo</url>
+			<id>itclinical-internal</id>
+			<url>http://192.168.10.103:8082/archiva/repository/itclinical-internal/</url>
 		</repository>
-
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://192.168.10.103:8082/archiva/repository/snapshots/</url>
+		</snapshotRepository>
 		<site>
 			<id>displaytag</id>
 			<name>displaytag</name>
