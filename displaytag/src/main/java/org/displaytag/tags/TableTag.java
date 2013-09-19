@@ -1046,7 +1046,7 @@ public class TableTag extends HtmlTableTag
             MediaTypeEnum.HTML);
 
         // if we are doing partialLists then ensure we have our size object
-        if (this.partialList)
+        if (this.partialList  && request.getParameter(TableTagParameters.PARAMETER_EXPORTING) == null)
         {
             if ((this.sizeObjectName == null) && (this.size == null))
             {
