@@ -13,6 +13,9 @@ package org.displaytag.export;
 
 import java.awt.Color;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.jsp.JspException;
@@ -157,12 +160,15 @@ public class PdfView implements BinaryExportView
             footer.setBorder(Rectangle.NO_BORDER);
             footer.setAlignment(Element.ALIGN_CENTER);
 
+            HeaderFooter pageHeader = addHeader();
+            
             PdfWriter.getInstance(document, out);
 
             // Fill the virtual PDF table with the necessary data
             generatePDFTable();
             document.open();
             document.setFooter(footer);
+            document.setHeader(pageHeader);
             document.add(this.tablePDF);
             document.close();
 
@@ -173,7 +179,25 @@ public class PdfView implements BinaryExportView
         }
     }
 
-    /**
+	/**
+	 *TODO - dirty hammer. Should be private
+	 * @return
+	 */
+	public HeaderFooter addHeader() {
+		//adds simple header with date stamp
+		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:m");
+		String today = dt1.format(retrieveDate());            
+		HeaderFooter pageHeader = new HeaderFooter(new Phrase("Generated on " + today), true);
+		pageHeader.setBorder(Rectangle.NO_BORDER);
+		pageHeader.setAlignment(Element.ALIGN_LEFT);
+		return pageHeader;
+	}
+
+    protected Date retrieveDate() {
+		return Calendar.getInstance().getTime();
+	}
+
+	/**
      * Generates the header cells, which persist on every page of the PDF document.
      * @throws BadElementException IText exception
      */
