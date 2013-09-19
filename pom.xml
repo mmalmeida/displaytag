@@ -10,16 +10,18 @@
     The display tag library is an open source suite of custom tags that provide high-level web presentation patterns
     which will work in an MVC model. The library provides a significant amount of functionality while still being easy
     to use.
+    Original project was hosted on http://displaytag.sourceforge.net. This fork continues their wonderful job.
   </description>
-	<url>http://displaytag.sourceforge.net</url>
+	<url>https://github.com/mmalmeida/displaytag</url>
 	<issueManagement>
-		<system>jira</system>
-		<url>http://jira.codehaus.org/browse/DISPL</url>
+		<system>github</system>
+		<url>https://github.com/mmalmeida/displaytag/issues</url>
 	</issueManagement>
+
 	<scm>
-		<connection>scm:svn:http://displaytag.svn.sourceforge.net/svnroot/displaytag/trunk</connection>
-		<developerConnection>scm:svn:https://displaytag.svn.sourceforge.net/svnroot/displaytag/trunk</developerConnection>
-		<url>http://displaytag.svn.sourceforge.net/viewcvs.cgi/displaytag/trunk</url>
+		<connection>scm:git:git@github.com:mmalmeida/displaytag.git</connection>
+		<url>scm:git:git@github.com:mmalmeida/displaytag.git</url>
+		<developerConnection>scm:git:git@github.com:mmalmeida/displaytag.git</developerConnection>
 	</scm>
 	<ciManagement>
 		<notifiers>
