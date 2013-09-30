@@ -2,7 +2,6 @@ package org.displaytag.export;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +20,8 @@ import org.displaytag.render.TableWriterAdapter;
 import org.displaytag.util.HtmlAttributeMap;
 import org.displaytag.util.MultipleHtmlAttribute;
 import org.displaytag.util.TagConstants;
+
+import com.itclinical.system.date.SystemDate;
 
 /**
  * Writes the table as an XML file, including any totals and grouping information. Used by the FOP export.
@@ -87,8 +88,8 @@ public class XmlTotalsWriter extends TableWriterAdapter
     @Override
     protected void writeTableOpener(TableModel model) throws Exception
     {
-    	Date now = new Date();
-        xml.append( "<?xml version=\"1.0\"?>\n<table>\n<datetime>"+now.toString()+"</datetime>\n"); //$NON-NLS-1$
+    	String now = SystemDate.getToday();
+        xml.append( "<?xml version=\"1.0\"?>\n<table>\n<datetime>"+now+"</datetime>\n"); //$NON-NLS-1$
     }
 
     @Override
