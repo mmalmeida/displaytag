@@ -25,16 +25,15 @@
 
       <fo:page-sequence master-reference="A4">
 		 <fo:static-content flow-name="xsl-region-before">
-            <fo:block margin="0.1in 0.1in 0.1in 0.1in" text-align="rigth" font-size="12pt" font-weight="bold" color="#003366">
-				test
+            <fo:block margin="0.1in 0.1in 0.1in 0.1in" text-align="right" font-size="12pt" font-weight="bold" >
 				<xsl:value-of select="table/datetime" />
 			</fo:block>
           </fo:static-content>
 
 
         <fo:flow flow-name="xsl-region-body">
-          <fo:block hyphenate="true" font-size="12" font-family="Helvetica">
-              <fo:table text-align="left">
+          <fo:block hyphenate="true" font-size="12" font-family="Helvetica" text-align="center" wrap-option="wrap">
+              <fo:table>
                 <fo:table-header>
                     <xsl:apply-templates select="//header"/>
                 </fo:table-header>
@@ -82,21 +81,38 @@
                     <xsl:when test="$grouping-column = 0">
                         <!-- grand totals -->
                         <xsl:for-each select="subtotal//subtotal-cell">
-                            <fo:table-cell padding="6pt" border-top="0.5pt solid black"><fo:block text-align="right" font-weight="bold"><xsl:value-of select="."/></fo:block></fo:table-cell>
+                            <fo:table-cell wrap-option="wrap" padding="6pt" border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black"><fo:block hyphenate="true" 
+          overflow="hidden"
+           wrap-option="wrap" text-align="right" font-weight="bold">
+                             <xsl:call-template name="intersperse-with-zero-spaces">
+					    		<xsl:with-param name="str" select="."/>
+							</xsl:call-template>
+<!--                             <xsl:value-of select="."/> -->
+                            </fo:block></fo:table-cell>
                         </xsl:for-each>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:for-each select="subtotal//subtotal-cell[position() &lt; $grouping-column]"> <fo:table-cell><fo:block/></fo:table-cell> </xsl:for-each>
-                        <fo:table-cell padding="6pt"><fo:block font-weight="bold" >
+                        <fo:table-cell padding="6pt" border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black"><fo:block font-weight="bold" >
                             <!-- if the subgroup is not the outermost, italicize the label -->
                             <xsl:if test="parent::subgroup[@grouped-by &gt; 0]"><xsl:attribute name="font-style">italic</xsl:attribute></xsl:if>
                             <xsl:value-of select="$grouping-value"/> Total</fo:block></fo:table-cell>
                         <!-- When we are doing the grand total, the grouping column will be 0, but we have already written a total label in col 1; we can safely  -->
                         <xsl:for-each select="subtotal//subtotal-cell[position() &gt; $grouping-column]">
                             <!-- if the subgroup is not the outermost, italicize the total -->
-                            <fo:table-cell padding="6pt"><fo:block text-align="right" font-weight="bold">
+                            <fo:table-cell  wrap-option="wrap" padding="6pt" border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black"><fo:block text-align="right" font-weight="bold" wrap-option="wrap"
+                             hyphenate="true"
+                            >
                             <xsl:if test="ancestor::subgroup[@grouped-by &gt; 1]"><xsl:attribute name="font-style">italic</xsl:attribute></xsl:if>
-                            <xsl:value-of select="."/></fo:block></fo:table-cell>
+                            
+                            <xsl:call-template name="intersperse-with-zero-spaces">
+					    		<xsl:with-param name="str" select="."/>
+							</xsl:call-template>
+<!--                             <xsl:value-of select="."/> -->
+                            </fo:block></fo:table-cell>
                         </xsl:for-each>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -114,13 +130,24 @@
 
     <!-- an ordinary cell -->
   <xsl:template match="cell">
-      <fo:table-cell padding="6pt"><fo:block>
-          <xsl:if test="contains(@class, 'right') or @text-align='right'"><xsl:attribute name="text-align">right</xsl:attribute></xsl:if>
-          <xsl:value-of select="."/></fo:block></fo:table-cell>
+      <fo:table-cell border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black" wrap-option="wrap" padding="6pt" ><fo:block wrap-option="wrap" hyphenate="true">
+      <xsl:if test="contains(@class, 'right') or @text-align='right'"><xsl:attribute name="text-align">right</xsl:attribute></xsl:if>
+      
+      
+      	<xsl:call-template name="intersperse-with-zero-spaces">
+    		<xsl:with-param name="str" select="."/>
+		</xsl:call-template>
+      
+          
+<!--           <xsl:value-of select="."/> -->
+          
+          </fo:block></fo:table-cell>
   </xsl:template>
     <!-- an ordinary cell which has been grouped -->
   <xsl:template match="cell[@grouped='true']">
-      <fo:table-cell padding="6pt"><fo:block/></fo:table-cell>
+      <fo:table-cell border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black" padding="6pt"><fo:block/></fo:table-cell>
   </xsl:template>
 
 
@@ -133,8 +160,42 @@
   </xsl:template>
   <!-- header cell -->
   <xsl:template match="//header-cell">
-       <fo:table-cell padding="6pt" border-bottom="0.5pt solid black"> <fo:block  font-weight="bold"><xsl:value-of select="."/></fo:block> </fo:table-cell>
+       <fo:table-cell border-top="0.5pt solid black" border-right="0.5pt solid black"
+                            	border-left="0.5pt solid black" border-bottom="0.5pt solid black" wrap-option="wrap" padding="6pt" > <fo:block hyphenate="true" wrap-option="wrap" 
+           font-weight="bold">
+        <xsl:call-template name="intersperse-with-zero-spaces">
+					    		<xsl:with-param name="str" select="."/>
+							</xsl:call-template>
+<!--        <xsl:value-of select="."/> -->
+       </fo:block> </fo:table-cell>
   </xsl:template>
-
+  
+  <xsl:template name="intersperse-with-zero-spaces">
+  
+  <xsl:param name="str"/>
+ <xsl:variable name="spacechars">
+ &#x9;&#xA;
+ &#x2000;&#x2001;&#x2002;&#x2003;&#x2004;&#x2005;
+ &#x2006;&#x2007;&#x2008;&#x2009;&#x200A;&#x200B;
+ </xsl:variable>
+ 
+ <xsl:if test="string-length($str) &gt; 0">
+ <xsl:variable name="c1"
+ select="substring($str, 1, 1)"/>
+ <xsl:variable name="c2"
+ select="substring($str, 2, 1)"/>
+ 
+ <xsl:value-of select="$c1"/>
+ <xsl:if test="$c2 != '' and
+ not(contains($spacechars, $c1) or
+ contains($spacechars, $c2))">
+ <xsl:text>&#x200B;</xsl:text>
+ </xsl:if>
+ 
+ <xsl:call-template name="intersperse-with-zero-spaces">
+ <xsl:with-param name="str" select="substring($str, 2)"/>
+ </xsl:call-template>
+ </xsl:if>
+</xsl:template>
 
 </xsl:stylesheet>

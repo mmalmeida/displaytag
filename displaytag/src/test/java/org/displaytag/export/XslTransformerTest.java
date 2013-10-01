@@ -29,12 +29,11 @@ import com.lowagie.text.pdf.PdfReader;
  */
 public class XslTransformerTest extends TestCase
 {
-
-
+	
     @Test
     public void testMainTest() throws Exception
     {
-        File f =  File.createTempFile("inline","pdf");
+    	File f =  File.createTempFile("inline","pdf");
         String styleSheetPath = "/org/displaytag/export/asFo_us.xsl";
         FopExportView.transform(XML, styleSheetPath, f);
         PdfReader reader = new PdfReader(f.getAbsolutePath());
@@ -82,7 +81,7 @@ public class XslTransformerTest extends TestCase
 
     public static final String XML = "<table>\n" +
             "    <header>\n" +
-            "        <header-cell >AntColumn</header-cell>\n" +
+            "        <header-cell >AntColumnffdsfgdsg</header-cell>\n" +
             "        <header-cell >BeeColumn</header-cell>\n" +
             "        <header-cell >Column3</header-cell>\n" +
             "        <header-cell >BeeColumn</header-cell>\n" +
@@ -92,7 +91,7 @@ public class XslTransformerTest extends TestCase
             "    <subgroup grouped-by=\"1\">\n" +
             "        <subgroup grouped-by=\"2\">\n" +
             "            <row>\n" +
-            "                <cell grouped=\"true\">Ant</cell>\n" +
+            "                <cell grouped=\"true\">testesttestesttesttes</cell>\n" +
             "                <cell grouped=\"true\">Bee</cell>\n" +
             "                <cell text-align=\"right\">2</cell>\n" +
             "                <cell>Bee</cell>\n" +
