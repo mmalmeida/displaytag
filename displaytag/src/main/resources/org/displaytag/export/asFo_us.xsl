@@ -25,14 +25,22 @@
 
       <fo:page-sequence master-reference="A4">
 		 <fo:static-content flow-name="xsl-region-before">
-            <fo:block margin="0.1in 0.1in 0.1in 0.1in" text-align="right" font-size="12pt" font-weight="bold" >
+		 	<fo:block margin="0.3in 0.1in 0.1in 0.1in" text-align="center" font-size="12pt" font-weight="bold" >
+					<xsl:value-of select="table/caption"/>
+			</fo:block>
+			<fo:block margin="0.1in 0.1in 0.1in 0.1in" text-align="right" font-size="12pt" font-weight="bold" >
 				<xsl:value-of select="table/datetime" />
 			</fo:block>
           </fo:static-content>
 
+			<fo:static-content flow-name="xsl-region-after">
+		    	<fo:block text-align="center">
+		       		Page <fo:page-number/> of <fo:page-number-citation ref-id="end"/>
+		     	</fo:block>
+		   </fo:static-content>
 
         <fo:flow flow-name="xsl-region-body">
-          <fo:block hyphenate="true" font-size="12" font-family="Helvetica" text-align="center" wrap-option="wrap">
+          <fo:block font-size="12" font-family="Helvetica" text-align="center" wrap-option="wrap">
               <fo:table>
                 <fo:table-header>
                     <xsl:apply-templates select="//header"/>
@@ -42,9 +50,8 @@
                 </fo:table-body>
               </fo:table>
               
-              
-              
           </fo:block>
+          <fo:block id="end"/>
         </fo:flow>
       </fo:page-sequence>
     </fo:root>

@@ -89,7 +89,8 @@ public class XmlTotalsWriter extends TableWriterAdapter
     protected void writeTableOpener(TableModel model) throws Exception
     {
     	String now = SystemDate.getToday();
-        xml.append( "<?xml version=\"1.0\"?>\n<table>\n<datetime>"+now+"</datetime>\n"); //$NON-NLS-1$
+    	String caption = model.getCaption();
+        xml.append( "<?xml version=\"1.0\"?>\n<table>\n<datetime>"+now+"</datetime>\n<caption>"+caption+"</caption>\n"); //$NON-NLS-1$
     }
 
     @Override
