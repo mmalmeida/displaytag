@@ -7,10 +7,8 @@
     <relativePath>..</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>displaytag</groupId>
   <artifactId>displaytag-export-poi</artifactId>
   <name>Display excel export module</name>
-  <version>1.3-SNAPSHOT</version>
   <description>
     The Display excel export module is an optional displaytag extension which will allow you to export data using the
     Microsoft Excel binary format through Jakarta POI.

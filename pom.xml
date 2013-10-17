@@ -11,18 +11,38 @@
     which will work in an MVC model. The library provides a significant amount of functionality while still being easy
     to use.
     Original project was hosted on http://displaytag.sourceforge.net. This fork continues their wonderful job.
-  </description>
+	</description>
 	<url>https://github.com/mmalmeida/displaytag</url>
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/mmalmeida/displaytag/issues</url>
 	</issueManagement>
 
+<!-- 	<scm> -->
+<!-- 		<connection>scm:git:git@github.com:mmalmeida/displaytag.git</connection> -->
+<!-- 		<url>scm:git:git@github.com:mmalmeida/displaytag.git</url> -->
+<!-- 		<developerConnection>scm:git:git@github.com:mmalmeida/displaytag.git</developerConnection> -->
+<!-- 	</scm> -->
+  
 	<scm>
-		<connection>scm:git:git@github.com:mmalmeida/displaytag.git</connection>
-		<url>scm:git:git@github.com:mmalmeida/displaytag.git</url>
-		<developerConnection>scm:git:git@github.com:mmalmeida/displaytag.git</developerConnection>
+		<connection>scm:svn:svn://192.168.10.103/tools/trunk/displaytag-doc</connection>
+		<developerConnection>scm:svn:svn://192.168.10.103/tools/trunk/displaytag-doc</developerConnection>
 	</scm>
+	<distributionManagement>
+		<repository>
+			<id>itclinical-internal</id>
+			<url>http://192.168.10.103:8082/archiva/repository/itclinical-internal/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://192.168.10.103:8082/archiva/repository/snapshots/</url>
+		</snapshotRepository>
+		<site>
+			<id>displaytag</id>
+			<name>displaytag</name>
+			<url>scp://shell.sourceforge.net/home/groups/d/di/displaytag/htdocs/${project.version}/</url>
+		</site>
+	</distributionManagement>
 	<ciManagement>
 		<notifiers>
 			<notifier>
@@ -173,12 +193,12 @@
 								</copy>
 								<replace value="href=&quot;../" token="href=&quot;/"
 									dir="..">
-									<include name="${pom.artifactId}/src/site/site.xml" />
+									<include name="${project.artifactId}/src/site/site.xml" />
 									<exclude name="displaytag-doc/src/site/site.xml" />
 								</replace>
-								<replace value="href=&quot;" token="href=&quot;../${pom.artifactId}/"
+								<replace value="href=&quot;" token="href=&quot;../${project.artifactId}/"
 									dir="..">
-									<include name="${pom.artifactId}/src/site/site.xml" />
+									<include name="${project.artifactId}/src/site/site.xml" />
 									<exclude name="displaytag-doc/src/site/site.xml" />
 								</replace>
 							</tasks>
@@ -210,7 +230,7 @@
 						<descriptor>src/main/assembly/bin.xml</descriptor>
 						<descriptor>src/main/assembly/src.xml</descriptor>
 					</descriptors>
-					<finalName>displaytag-${pom.version}</finalName>
+					<finalName>displaytag-${project.version}</finalName>
 				</configuration>
 				<version>2.2-beta-2</version>
 			</plugin>
@@ -287,6 +307,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>com.itclinical.systemDate</groupId>
+				<artifactId>systemDate</artifactId>
+				<version>${systemdate.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.5</version>
@@ -322,12 +347,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
-				<version>1.5.6</version>
+				<version>1.6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.5.6</version>
+				<version>1.6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
@@ -504,19 +529,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<distributionManagement>
-		<repository>
-			<id>itclinical-internal</id>
-			<url>http://192.168.10.103:8082/archiva/repository/itclinical-internal/</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>http://192.168.10.103:8082/archiva/repository/snapshots/</url>
-		</snapshotRepository>
-		<site>
-			<id>displaytag</id>
-			<name>displaytag</name>
-			<url>scp://shell.sourceforge.net/home/groups/d/di/displaytag/htdocs/${pom.version}/</url>
-		</site>
-	</distributionManagement>
+	<properties>
+		<systemdate.version>0.0.2</systemdate.version>
+	</properties>
 </project>

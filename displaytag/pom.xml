@@ -16,6 +16,10 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.itclinical.systemDate</groupId>
+			<artifactId>systemDate</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>tomcat</groupId>
 			<artifactId>jasper-compiler-jdt</artifactId>
 			<scope>test</scope>

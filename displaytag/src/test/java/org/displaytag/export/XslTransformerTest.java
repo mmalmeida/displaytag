@@ -1,16 +1,25 @@
 package org.displaytag.export;
 
- import org.junit.Assert;
+ import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.servlet.jsp.JspException;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import junit.framework.TestCase;
+
+import org.junit.Assert;
 import org.junit.Test;
 
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.servlet.jsp.JspException;
-import java.io.*;
-
 import com.lowagie.text.pdf.PdfReader;
-import junit.framework.TestCase;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,17 +29,16 @@ import junit.framework.TestCase;
  */
 public class XslTransformerTest extends TestCase
 {
-
-
+	
     @Test
     public void testMainTest() throws Exception
     {
-        File f =  File.createTempFile("inline","pdf");
+    	File f =  File.createTempFile("inline","pdf");
         String styleSheetPath = "/org/displaytag/export/asFo_us.xsl";
         FopExportView.transform(XML, styleSheetPath, f);
         PdfReader reader = new PdfReader(f.getAbsolutePath());
 //        byte[] page = reader.getPageContent(1);
-        Assert.assertEquals("Expected a valid pdf file with a single page", 1, reader.getNumberOfPages());
+        Assert.assertEquals("Expected a valid pdf file with a single page", 2, reader.getNumberOfPages());
 
     }
 

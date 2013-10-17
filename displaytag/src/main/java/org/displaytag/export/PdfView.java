@@ -12,19 +12,18 @@
 package org.displaytag.export;
 
 import java.awt.Color;
+import com.lowagie.text.Font;
+import com.lowagie.text.Rectangle;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.displaytag.Messages;
 import org.displaytag.exception.BaseNestableJspTagException;
 import org.displaytag.exception.SeverityEnum;
+import com.lowagie.text.Cell;
 import org.displaytag.model.Column;
 import org.displaytag.model.ColumnIterator;
 import org.displaytag.model.HeaderCell;
@@ -33,17 +32,16 @@ import org.displaytag.model.RowIterator;
 import org.displaytag.model.TableModel;
 import org.displaytag.util.TagConstants;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.lowagie.text.BadElementException;
-import com.lowagie.text.Cell;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
-import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -160,15 +158,12 @@ public class PdfView implements BinaryExportView
             footer.setBorder(Rectangle.NO_BORDER);
             footer.setAlignment(Element.ALIGN_CENTER);
 
-            HeaderFooter pageHeader = addHeader();
-            
             PdfWriter.getInstance(document, out);
 
             // Fill the virtual PDF table with the necessary data
             generatePDFTable();
             document.open();
             document.setFooter(footer);
-            document.setHeader(pageHeader);
             document.add(this.tablePDF);
             document.close();
 
@@ -179,25 +174,7 @@ public class PdfView implements BinaryExportView
         }
     }
 
-	/**
-	 *TODO - dirty hammer. Should be private
-	 * @return
-	 */
-	public HeaderFooter addHeader() {
-		//adds simple header with date stamp
-		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:m");
-		String today = dt1.format(retrieveDate());            
-		HeaderFooter pageHeader = new HeaderFooter(new Phrase("Generated on " + today), true);
-		pageHeader.setBorder(Rectangle.NO_BORDER);
-		pageHeader.setAlignment(Element.ALIGN_LEFT);
-		return pageHeader;
-	}
-
-    protected Date retrieveDate() {
-		return Calendar.getInstance().getTime();
-	}
-
-	/**
+    /**
      * Generates the header cells, which persist on every page of the PDF document.
      * @throws BadElementException IText exception
      */
